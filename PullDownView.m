@@ -45,7 +45,6 @@ static PullDownView *pullDownVieSingleton=nil;
 
 -(void)handlePanGensture:(UIPanGestureRecognizer *)panGesture
 {
-  //  CGFloat YshiftDownView=self.parentController.view.frame.origin.y+40.0f+64.0f;
     CGPoint velocity = [panGesture velocityInView:self.parentController.view];
     BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
     if (isVerticalGesture) {
@@ -53,6 +52,7 @@ static PullDownView *pullDownVieSingleton=nil;
             switch (panGesture.state) {
                 case UIGestureRecognizerStateBegan:
                 {
+                    
                 }
               break;
                     case UIGestureRecognizerStateChanged:
@@ -60,8 +60,7 @@ static PullDownView *pullDownVieSingleton=nil;
                     CGFloat heightToSlide=0.0f;
                     CGPoint distanceMoved =[panGesture translationInView:self.parentController.view];
                     (distanceMoved.y>=64.0f)?(heightToSlide=64.0f):(heightToSlide=distanceMoved.y);
-                    self.pullDownView.frame=CGRectMake(0,0 ,self.parentController.view.frame.size.width,64.0f);
-                    CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide, self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
+                     CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide, self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
                     [self.parentController.view insertSubview:self.pullDownView aboveSubview:self.parentController.view];
                     self.parentController.view.frame=newParentControllerView;
                     distanceMoved=CGPointZero;
@@ -70,13 +69,12 @@ static PullDownView *pullDownVieSingleton=nil;
         case UIGestureRecognizerStateEnded:
             {
                 self.isPullDownViewShown=!self.isPullDownViewShown;
-
+                
             }
             break;
         default:
             break;
         }
-            
         }
         else
         {
@@ -91,19 +89,22 @@ static PullDownView *pullDownVieSingleton=nil;
                     {
                         CGFloat heightToSlide=0.0f;
                         CGPoint distanceMoved =[panGesture translationInView:self.parentController.view];
-                        (distanceMoved.y>=-64.0f)?(heightToSlide=-64.0f):(heightToSlide=distanceMoved.y);
-                        self.pullDownView.frame=CGRectMake(0,0,self.parentController.view.frame.size.width,64.0f);
-                        CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide, self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
-                        //[self.parentController.view insertSubview:self.pullDownView aboveSubview:self.parentController.view];
+                        (fabs(distanceMoved.y)>=64.0f)?(heightToSlide=-64.0f):(heightToSlide=distanceMoved.y);
+                        heightToSlide=64.0f+heightToSlide;
+                        CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide,self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
                         self.parentController.view.frame=newParentControllerView;
                         distanceMoved=CGPointZero;
-                    
+                        if(heightToSlide==0.0f){
+                            panGesture.enabled=NO;
+                            [self.pullDownView removeFromSuperview];
+                            self.isPullDownViewShown=!self.isPullDownViewShown;
+
+                        }
                     }
                 }
                     break;
                 case UIGestureRecognizerStateEnded:
                 {
-                    self.isPullDownViewShown=!self.isPullDownViewShown;
                 }
                     break;
                 default:
@@ -130,15 +131,14 @@ static PullDownView *pullDownVieSingleton=nil;
          }
          else{
              
-             if (distanceMoved.y<=-64.0f)
+             if (fabs(distanceMoved.y)<=64.0f)
              {
-                 gestureRecognizer.enabled=NO;
              }
          }
     }
     else
     {
-        return NO;
+       // return NO;
     }
     return YES;
 }

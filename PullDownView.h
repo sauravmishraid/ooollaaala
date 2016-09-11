@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef NS_ENUM(NSInteger, panDirections)
+{
+    PanDirectionDown = 1,
+    PanDirectionUp,
+    panDirectionLeft,
+    panDirectionRight,
+};
 @interface PullDownView : NSObject<UIGestureRecognizerDelegate>
 
 + (instancetype)pullDownViewSingleton;
