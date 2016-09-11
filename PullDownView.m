@@ -76,10 +76,12 @@ static PullDownView *pullDownVieSingleton=nil;
                     NSLog(@"Down : %f , distance : %f", heightToSlide,distanceMoved.y);
                     
                     if (heightToSlide>=0 && heightToSlide<=64.0f) {
-                        CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide, self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
-                        [self.parentController.view insertSubview:self.pullDownView aboveSubview:self.parentController.view];
-                        self.parentController.view.frame=newParentControllerView;
+                        [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
+                            CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide, self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
+                            [self.parentController.view insertSubview:self.pullDownView aboveSubview:self.parentController.view];
+                            self.parentController.view.frame=newParentControllerView;
 
+                        } completion:nil];
                     }
                     distanceMoved=CGPointZero;
 
@@ -115,13 +117,20 @@ static PullDownView *pullDownVieSingleton=nil;
                         heightToSlide=64.0f+heightToSlide;
                         NSLog(@"Up : %f , distance : %f", heightToSlide,distanceMoved.y);
                         if (heightToSlide>=0) {
-                            CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide,self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
-                            self.parentController.view.frame=newParentControllerView;
-                            if(heightToSlide<=0.0f){
-                                [self.pullDownView removeFromSuperview];
+                            [UIView animateWithDuration:0.25f delay:0.0f options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide,self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
+                                    self.parentController.view.frame=newParentControllerView;
+                                });
+
+                            } completion:nil];
+                                if(heightToSlide==0.0f){
+                                    [UIView animateWithDuration:0.25 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                                        [self.pullDownView removeFromSuperview];
+                                    } completion:nil];
+                                
                                 self.isPullDownViewShown=NO;
                                 NSLog(@"Inside hidden view.");
-                                
                             }
 
                         }
