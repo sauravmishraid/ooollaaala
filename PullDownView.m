@@ -45,7 +45,7 @@ static PullDownView *pullDownVieSingleton=nil;
 
 -(void)handlePanGensture:(UIPanGestureRecognizer *)panGesture
 {
-   // NSLog(@"%@",[NSNumber numberWithBool:self.isPullDownViewShown]);
+   NSLog(@"%@",[NSNumber numberWithBool:self.isPullDownViewShown]);
     CGPoint velocity = [panGesture velocityInView:self.parentController.view];
     CGPoint distanceMoved =[panGesture translationInView:self.parentController.view];
     
@@ -59,13 +59,12 @@ static PullDownView *pullDownVieSingleton=nil;
             switch (panGesture.state) {
                 case UIGestureRecognizerStateBegan:
                 {
-                        self.isPullDownViewShown=YES;
 
                 }
               break;
                     case UIGestureRecognizerStateChanged:
                 {
-                    
+                    self.isPullDownViewShown=YES;
                         CGFloat heightToSlide=0.0f;
                         CGPoint distanceMoved =[panGesture translationInView:self.parentController.view];
                     if ((distanceMoved.y>=0.0f)&&(distanceMoved.y<=64.0)) {
