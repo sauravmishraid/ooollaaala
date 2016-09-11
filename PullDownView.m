@@ -45,33 +45,56 @@ static PullDownView *pullDownVieSingleton=nil;
 
 -(void)handlePanGensture:(UIPanGestureRecognizer *)panGesture
 {
+   // NSLog(@"%@",[NSNumber numberWithBool:self.isPullDownViewShown]);
     CGPoint velocity = [panGesture velocityInView:self.parentController.view];
+    CGPoint distanceMoved =[panGesture translationInView:self.parentController.view];
+    
+    if (distanceMoved.y<=0) {
+        //NSLog(@"%f",distanceMoved.y);
+
+    }
     BOOL isVerticalGesture = fabs(velocity.y) > fabs(velocity.x);
     if (isVerticalGesture) {
         if (velocity.y > 0) {
             switch (panGesture.state) {
                 case UIGestureRecognizerStateBegan:
                 {
-                    
+                        self.isPullDownViewShown=YES;
+
                 }
               break;
                     case UIGestureRecognizerStateChanged:
                 {
-                    CGFloat heightToSlide=0.0f;
-                    CGPoint distanceMoved =[panGesture translationInView:self.parentController.view];
-                    (distanceMoved.y>=64.0f)?(heightToSlide=64.0f):(heightToSlide=distanceMoved.y);
-                     CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide, self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
-                    [self.parentController.view insertSubview:self.pullDownView aboveSubview:self.parentController.view];
-                    self.parentController.view.frame=newParentControllerView;
+                    
+                        CGFloat heightToSlide=0.0f;
+                        CGPoint distanceMoved =[panGesture translationInView:self.parentController.view];
+                    if ((distanceMoved.y>=0.0f)&&(distanceMoved.y<=64.0)) {
+                        heightToSlide=distanceMoved.y;
+                    }
+                    else if((distanceMoved.y>64.0f) || (distanceMoved.y<=0.0f)){
+                    (heightToSlide=64.0f);
+                    }
+                    NSLog(@"Down : %f , distance : %f", heightToSlide,distanceMoved.y);
+                    
+                    if (heightToSlide>=0 && heightToSlide<=64.0f) {
+                        CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide, self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
+                        [self.parentController.view insertSubview:self.pullDownView aboveSubview:self.parentController.view];
+                        self.parentController.view.frame=newParentControllerView;
+
+                    }
                     distanceMoved=CGPointZero;
+
+
                 }
                     break;
-        case UIGestureRecognizerStateEnded:
+        case UIGestureRecognizerStateFailed:
+        case UIGestureRecognizerStateCancelled:
             {
-                self.isPullDownViewShown=!self.isPullDownViewShown;
-                
+                //self.isPullDownViewShown=NO;
+
             }
             break;
+                    
         default:
             break;
         }
@@ -91,22 +114,30 @@ static PullDownView *pullDownVieSingleton=nil;
                         CGPoint distanceMoved =[panGesture translationInView:self.parentController.view];
                         (fabs(distanceMoved.y)>=64.0f)?(heightToSlide=-64.0f):(heightToSlide=distanceMoved.y);
                         heightToSlide=64.0f+heightToSlide;
-                        CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide,self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
-                        self.parentController.view.frame=newParentControllerView;
-                        distanceMoved=CGPointZero;
-                        if(heightToSlide==0.0f){
-                            panGesture.enabled=NO;
-                            [self.pullDownView removeFromSuperview];
-                            self.isPullDownViewShown=!self.isPullDownViewShown;
+                        NSLog(@"Up : %f , distance : %f", heightToSlide,distanceMoved.y);
+                        if (heightToSlide>=0) {
+                            CGRect  newParentControllerView= CGRectMake(self.parentController.view.frame.origin.x,heightToSlide,self.parentController.view.frame.size.width, self.parentController.view.frame.size.height);
+                            self.parentController.view.frame=newParentControllerView;
+                            if(heightToSlide<=0.0f){
+                                [self.pullDownView removeFromSuperview];
+                                self.isPullDownViewShown=NO;
+                                NSLog(@"Inside hidden view.");
+                                
+                            }
 
                         }
+                        distanceMoved=CGPointZero;
+
                     }
                 }
                     break;
-                case UIGestureRecognizerStateEnded:
+                case UIGestureRecognizerStateFailed:
+                case UIGestureRecognizerStateCancelled:
                 {
+                    self.isPullDownViewShown=YES;
+                    
                 }
-                    break;
+                    break;                    break;
                 default:
                     break;
             }
@@ -115,7 +146,7 @@ static PullDownView *pullDownVieSingleton=nil;
     }
 }
 
--(BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
+/*-(BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
 {
     CGPoint velocity = [gestureRecognizer velocityInView:self.parentController.view];
     CGPoint distanceMoved =[gestureRecognizer translationInView:self.parentController.view];
@@ -141,5 +172,5 @@ static PullDownView *pullDownVieSingleton=nil;
        // return NO;
     }
     return YES;
-}
+}*/
 @end

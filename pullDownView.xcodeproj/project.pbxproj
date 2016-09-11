@@ -17,6 +17,7 @@
 		1540CAA01D83D0E600F6105D /* pullDownViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1540CA9F1D83D0E600F6105D /* pullDownViewUITests.m */; };
 		1540CAB11D83D90200F6105D /* PullDownNib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1540CAB01D83D90200F6105D /* PullDownNib.xib */; };
 		1540CAB41D83DA8100F6105D /* PullDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1540CAB31D83DA8100F6105D /* PullDownView.m */; };
+		154B84AB1D856BE400D739EC /* swipeDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 154B84AA1D856BE400D739EC /* swipeDownView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		1540CAB01D83D90200F6105D /* PullDownNib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PullDownNib.xib; sourceTree = "<group>"; };
 		1540CAB21D83DA8100F6105D /* PullDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PullDownView.h; path = ../PullDownView.h; sourceTree = "<group>"; };
 		1540CAB31D83DA8100F6105D /* PullDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PullDownView.m; path = ../PullDownView.m; sourceTree = "<group>"; };
+		154B84A91D856BE400D739EC /* swipeDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = swipeDownView.h; sourceTree = "<group>"; };
+		154B84AA1D856BE400D739EC /* swipeDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = swipeDownView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,8 @@
 				1540CAB01D83D90200F6105D /* PullDownNib.xib */,
 				1540CAB21D83DA8100F6105D /* PullDownView.h */,
 				1540CAB31D83DA8100F6105D /* PullDownView.m */,
+				154B84A91D856BE400D739EC /* swipeDownView.h */,
+				154B84AA1D856BE400D739EC /* swipeDownView.m */,
 				1540CA861D83D0E600F6105D /* Assets.xcassets */,
 				1540CA881D83D0E600F6105D /* LaunchScreen.storyboard */,
 				1540CA8B1D83D0E600F6105D /* Info.plist */,
@@ -285,6 +290,7 @@
 				1540CA821D83D0E600F6105D /* ViewController.m in Sources */,
 				1540CAB41D83DA8100F6105D /* PullDownView.m in Sources */,
 				1540CA7F1D83D0E600F6105D /* AppDelegate.m in Sources */,
+				154B84AB1D856BE400D739EC /* swipeDownView.m in Sources */,
 				1540CA7C1D83D0E600F6105D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,6 +517,7 @@
 				1540CAA61D83D0E600F6105D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1540CAA71D83D0E600F6105D /* Build configuration list for PBXNativeTarget "pullDownViewTests" */ = {
 			isa = XCConfigurationList;
@@ -519,6 +526,7 @@
 				1540CAA91D83D0E600F6105D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1540CAAA1D83D0E600F6105D /* Build configuration list for PBXNativeTarget "pullDownViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +535,7 @@
 				1540CAAC1D83D0E600F6105D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
