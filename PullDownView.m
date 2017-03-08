@@ -15,6 +15,7 @@ static PullDownView *pullDownVieSingleton=nil;
 
 //Change #1
 
+//Change
 + (instancetype)pullDownViewSingleton {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
